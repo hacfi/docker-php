@@ -5,7 +5,7 @@ namespace Docker;
 use Exception as BaseException;
 
 /**
- * Docker\Exception
+ * Exception
  */
 class Exception extends BaseException
 {

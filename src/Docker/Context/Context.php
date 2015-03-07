@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
- * Docker\Context\Context
+ * Context
  */
 class Context implements ContextInterface
 {
@@ -35,8 +35,8 @@ class Context implements ContextInterface
     private $format = self::FORMAT_STREAM;
 
     /**
-     * @param string     $directory Directory of context
-     * @param string     $format    Format to use when sending the call (stream or tar: string)
+     * @param string $directory Directory of context
+     * @param string $format    Format to use when sending the call (stream or tar: string)
      */
     public function __construct($directory, $format = self::FORMAT_STREAM)
     {
@@ -93,7 +93,7 @@ class Context implements ContextInterface
     /**
      * Return the context as a tar archive
      *
-     * @throws \Symfony\Component\Process\Exception\ProcessFailedException
+     * @throws ProcessFailedException
      *
      * @return string Tar content
      */

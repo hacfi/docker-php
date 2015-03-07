@@ -10,17 +10,17 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
 
 /**
- * Docker\Manager\ImageManager
+ * ImageManager
  */
 class ImageManager
 {
     /**
-     * @var \GuzzleHttp\Client
+     * @var HttpClient
      */
     private $client;
 
     /**
-     * @param \GuzzleHttp\Client
+     * @param HttpClient $client
      */
     public function __construct(HttpClient $client)
     {
@@ -30,7 +30,7 @@ class ImageManager
     /**
      * Get all images from docker daemon
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return Image[]
      */
@@ -90,27 +90,26 @@ class ImageManager
     /**
      * Inspect an image
      *
-     * @param \Docker\Image $image
+     * @param Image $image
      *
-     * @throws \Docker\Exception\ImageNotFoundException
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
-     * @throws \GuzzleHttp\Exception\RequestException
+     * @throws ImageNotFoundException
+     * @throws UnexpectedStatusCodeException
+     * @throws RequestException
      *
      * @return array json data from docker inspect
      */
     public function inspect(Image $image)
     {
         try {
-            # Images need not have a name and tag,(__toString() may return ':')
-            # so prefer an id hash as the key
+            // Images need not have a name and tag,(__toString() may return ':')
+            // so prefer an id hash as the key
             if (null != $image->getId()) {
-              $id = $image->getId();
+                $id = $image->getId();
             } else {
-              $id = $image->__toString();
+                $id = $image->__toString();
             }
 
             $response = $this->client->get(['/images/{id}/json', ['id' => $id]]);
-
         } catch (RequestException $e) {
             if ($e->hasResponse() && $e->getResponse()->getStatusCode() == "404") {
                 throw new ImageNotFoundException($id, $e);
@@ -133,7 +132,7 @@ class ImageManager
      * @param string   $tag      Tag of image
      * @param callable $callback Callback to retrieve log of pull
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return Image
      */
@@ -169,7 +168,7 @@ class ImageManager
      * @param boolean $force   Force removal of image (default false)
      * @param boolean $noprune Do not remove parent images (default false)
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return ImageManager
      */
@@ -179,7 +178,7 @@ class ImageManager
             'image'   => $image->__toString(),
             'force'   => $force,
             'noprune' => $noprune,
-            'wait'    => true
+            'wait'    => true,
         ]]);
 
         if ($response->getStatusCode() !== "200") {
@@ -193,10 +192,10 @@ class ImageManager
      * Remove multiple images from docker daemon
      *
      * @param Image[]|array $images  Images to remove
-     * @param boolean       $force   Force removal of image (default false)
+     * @param boolean       $force   Force removal of images (default false)
      * @param boolean       $noprune Do not remove parent images (default false)
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return ImageManager
      */
@@ -221,7 +220,7 @@ class ImageManager
      *
      * @param string $term term to search
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return array
      */
@@ -232,7 +231,7 @@ class ImageManager
                 '/images/search?term={term}',
                 [
                     'term' => $term,
-                ]
+                ],
             ]
         );
 
@@ -246,12 +245,12 @@ class ImageManager
     /**
      * Tag an image
      *
-     * @param Image $image image to tag
-     * @param $repository Repository name to use
-     * @param string $tag Tag to use
-     * @param bool $force Force to set tag even if an image with the same name already exists ?
+     * @param Image   $image      Image to tag
+     * @param string  $repository Repository name to use
+     * @param string  $tag        Tag to use
+     * @param boolean $force      Force to set tag even if an image with the same name already exists?
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return ImageManager
      */
@@ -259,11 +258,11 @@ class ImageManager
     {
         $response = $this->client->post([
             '/images/{name}/tag?repo={repository}&tag={tag}&force={force}', [
-                'name' => $image->getId(),
+                'name'       => $image->getId(),
                 'repository' => $repository,
-                'tag' => $tag,
-                'force' => intval($force)
-            ]
+                'tag'        => $tag,
+                'force'      => (integer) $force,
+            ],
         ]);
 
         if ($response->getStatusCode() !== "201") {
@@ -281,14 +280,14 @@ class ImageManager
      *
      * @param Image $image
      *
-     * @throws \Docker\Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
      * @return array
      */
     public function history(Image $image)
     {
         $response = $this->client->get(['/images/{name}/history', [
-            'name' => $image->__toString()
+            'name' => $image->__toString(),
         ]]);
 
         if ($response->getStatusCode() !== "200") {

@@ -186,7 +186,7 @@ class DockerAdapter implements AdapterInterface
         $parts = explode(' ', array_shift($headers), 3);
 
         if (count($parts) <= 1) {
-            return null;
+            return;
         }
 
         $options = ['protocol_version' => substr($parts[0], -3)];
@@ -245,11 +245,12 @@ class DockerAdapter implements AdapterInterface
 
     private function getRequestHeaderAsString(RequestInterface $request)
     {
-        $message  = vsprintf('%s %s HTTP/%s', [
+        $message = sprintf(
+                '%s %s HTTP/%s',
                 strtoupper($request->getMethod()),
                 $request->getUrl(),
                 $request->getProtocolVersion()
-            ])."\r\n";
+            )."\r\n";
 
         foreach ($request->getHeaders() as $name => $values) {
             $message .= $name.': '.implode(', ', $values)."\r\n";
@@ -268,7 +269,7 @@ class DockerAdapter implements AdapterInterface
      * @param resource $stream The stream resource
      * @param string   $bytes  Bytes written in the stream
      *
-     * @return bool|int false if pipe is broken, number of bytes written otherwise
+     * @return boolean|integer false if pipe is broken, number of bytes written otherwise
      */
     private function fwrite($stream, $bytes)
     {

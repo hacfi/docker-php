@@ -6,7 +6,7 @@ use Docker\Exception as BaseException;
 use Exception;
 
 /**
- * Docker\Exception\ContainerNotFoundException
+ * ContainerNotFoundException
  */
 class ContainerNotFoundException extends BaseException
 {

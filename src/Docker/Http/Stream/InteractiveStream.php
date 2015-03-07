@@ -83,19 +83,19 @@ class InteractiveStream
     /**
      * Block until it receive a frame from websocket or return null if no more connexion
      *
-     * @param bool $block
+     * @param boolean $block
      * @return array
      */
     public function receive($block = true)
     {
         if ($this->stream->eof()) {
-            return null;
+            return;
         }
 
         $firstByte = $this->stream->read(1);
 
         if (!$block && empty($firstByte)) {
-            return null;
+            return;
         }
 
         if ($block && empty($firstByte)) {
@@ -153,7 +153,7 @@ class InteractiveStream
     /**
      * Force to have something of the expected size (block)
      *
-     * @param $length
+     * @param integer $length
      *
      * @return string
      */

@@ -6,7 +6,7 @@ use Docker\Exception as BaseException;
 use Exception;
 
 /**
- * Docker\Exception\ImageNotFoundException
+ * ImageNotFoundException
  */
 class ImageNotFoundException extends BaseException
 {

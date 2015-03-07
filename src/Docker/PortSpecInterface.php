@@ -3,7 +3,7 @@
 namespace Docker;
 
 /**
- * Docker\PortSpecInterface
+ * PortSpecInterface
  */
 interface PortSpecInterface
 {

@@ -8,10 +8,10 @@ use GuzzleHttp\Client;
 class DockerClient extends Client
 {
     /**
-     * @param array  $config     Config for http client (guzzle)
-     * @param string $entrypoint Docker entrypoint
-     * @param array  $context    Stream context options
-     * @param bool   $useTls     Use tls
+     * @param array   $config     Config for http client (guzzle)
+     * @param string  $entrypoint Docker entrypoint
+     * @param array   $context    Stream context options
+     * @param boolean $useTls     Use tls
      */
     public function __construct(array $config = [], $entrypoint = null, $context = null, $useTls = false)
     {

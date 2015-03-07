@@ -37,7 +37,7 @@ class Event extends \php_user_filter implements HasEmitterInterface
      * @param integer  $consumed Data consumed
      * @param boolean  $closing  Whether the stream is closing
      *
-     * @return int
+     * @return integer
      */
     public function filter($in, $out, &$consumed, $closing)
     {
@@ -112,8 +112,8 @@ class Event extends \php_user_filter implements HasEmitterInterface
         $size    = strlen($json);
         $inquote = false;
 
-        for ($level = 0, $objects = 0, $i =0; $i < $size; $i++) {
-            if ((boolean)($json[$i] == '"' && ($i > 0 ? $json[$i-1] : '') != '\\')) {
+        for ($level = 0, $objects = 0, $i = 0; $i < $size; $i++) {
+            if ((boolean) ($json[$i] == '"' && ($i > 0 ? $json[$i-1] : '') != '\\')) {
                 $inquote = !$inquote;
             }
 
@@ -143,7 +143,7 @@ class Event extends \php_user_filter implements HasEmitterInterface
         }
 
         foreach ($splited as $key => $jsonString) {
-           $splited[$key] = json_decode($jsonString, true);
+            $splited[$key] = json_decode($jsonString, true);
         }
 
         return $splited;

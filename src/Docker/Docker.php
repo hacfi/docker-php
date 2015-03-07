@@ -12,22 +12,22 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Stream\Stream;
 
 /**
- * Docker\Docker
+ * Docker
  */
 class Docker
 {
     /**
-     * @var \GuzzleHttp\Client
+     * @var HttpClient
      */
     private $httpClient;
 
     /**
-     * @var \Docker\Manager\ContainerManager
+     * @var ContainerManager
      */
     private $containerManager;
 
     /**
-     * @var \Docker\Manager\ImageManager
+     * @var ImageManager
      */
     private $imageManager;
 
@@ -40,7 +40,7 @@ class Docker
     }
 
     /**
-     * @return \GuzzleHttp\Client
+     * @return HttpClient
      */
     public function getHttpClient()
     {
@@ -48,7 +48,7 @@ class Docker
     }
 
     /**
-     * @return \Docker\Manager\ContainerManager
+     * @return ContainerManager
      */
     public function getContainerManager()
     {
@@ -60,7 +60,7 @@ class Docker
     }
 
     /**
-     * @return \Docker\Manager\ImageManager
+     * @return ImageManager
      */
     public function getImageManager()
     {
@@ -71,8 +71,9 @@ class Docker
         return $this->imageManager;
     }
 
-   /**
+    /**
      * Show the docker components version information
+     *
      * @return array json object with version values
      */
     public function getVersion()
@@ -86,7 +87,7 @@ class Docker
         return $response->json();
     }
 
-   /**
+    /**
      * Docker info: Display system-wide information
      * api_v1.16
      * @return array json object with version values
@@ -102,17 +103,16 @@ class Docker
         return $response->json();
     }
 
-
     /**
      * Build an image with docker
      *
-     * @param \Docker\Context\ContextInterface $context  Context to build
-     * @param string                           $name     Name of the wanted image
-     * @param callable                         $callback A callback to be called for having log of build
-     * @param boolean                          $quiet    Quiet build (doest not output commands during build)
-     * @param boolean                          $cache    Use docker cache
-     * @param boolean                          $rm       Remove intermediate container during build
-     * @param boolean                          $wait     Whether to wait for build to finish
+     * @param ContextInterface $context  Context to build
+     * @param string           $name     Name of the wanted image
+     * @param callable         $callback A callback to be called for having log of build
+     * @param boolean          $quiet    Quiet build (does not output commands during build)
+     * @param boolean          $cache    Use docker cache
+     * @param boolean          $rm       Remove intermediate containers during build
+     * @param boolean          $wait     Whether to wait for build to finish
      *
      * @return \GuzzleHttp\Message\ResponseInterface
      */
@@ -125,10 +125,10 @@ class Docker
         $content  = is_resource($context->read()) ? new Stream($context->read()) : $context->read();
 
         return $this->httpClient->post(['/build{?data*}', ['data' => [
-            'q' => (integer) $quiet,
-            't' => $name,
+            'q'       => (integer) $quiet,
+            't'       => $name,
             'nocache' => (integer) !$cache,
-            'rm' => (integer) $rm,
+            'rm'      => (integer) $rm,
         ]]], [
             'headers'  => ['Content-Type' => 'application/tar'],
             'body'     => $content,
@@ -141,12 +141,12 @@ class Docker
     /**
      * Commit a container into an image
      *
-     * @param \Docker\Container $container
-     * @param array             $config
+     * @param Container $container
+     * @param array     $config
      *
-     * @throws Exception\UnexpectedStatusCodeException
+     * @throws UnexpectedStatusCodeException
      *
-     * @return \Docker\Image
+     * @return Image
      *
      * @see http://docs.docker.com/reference/api/docker_remote_api_v1.7/#create-a-new-image-from-a-containers-changes
      */

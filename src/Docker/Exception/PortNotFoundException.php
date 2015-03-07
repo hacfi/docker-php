@@ -5,7 +5,7 @@ namespace Docker\Exception;
 use Docker\Exception as BaseException;
 
 /**
- * Docker\Exception\PortNotFoundException
+ * PortNotFoundException
  */
 class PortNotFoundException extends BaseException
 {

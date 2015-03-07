@@ -39,7 +39,7 @@ class OutputEvent implements EventInterface
     }
 
     /**
-     * @return null
+     * @return integer|null
      */
     public function getType()
     {

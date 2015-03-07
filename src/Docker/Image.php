@@ -3,7 +3,7 @@
 namespace Docker;
 
 /**
- * Docker\Image
+ * Image
  */
 class Image
 {

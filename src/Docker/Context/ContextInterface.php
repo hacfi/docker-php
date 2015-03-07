@@ -3,7 +3,7 @@
 namespace Docker\Context;
 
 /**
- * Docker\Context\ContextInterface
+ * ContextInterface
  */
 interface ContextInterface
 {

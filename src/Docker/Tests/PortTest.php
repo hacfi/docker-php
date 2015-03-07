@@ -48,13 +48,13 @@ class PortTest extends PHPUnit_Framework_TestCase
                 ['protocol' => null, 'port' => 80, 'hostIp' => '127.0.0.1', 'hostPort' => 8080],
                 ['80/tcp' => [['HostIp' => '127.0.0.1', 'HostPort' => 8080]]],
                 ['80/tcp' => []],
-                '127.0.0.1:8080:80'
+                '127.0.0.1:8080:80',
             ],
             [
                 ['protocol' => null, 'port' => 80, 'hostIp' => null, 'hostPort' => 8080],
                 ['80/tcp' => [['HostIp' => '', 'HostPort' => 8080]]],
                 ['80/tcp' => []],
-                '8080:80'
+                '8080:80',
             ],
         ];
     }

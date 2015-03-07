@@ -3,7 +3,7 @@
 namespace Docker;
 
 /**
- * Docker\Json
+ * Json
  */
 class Json
 {

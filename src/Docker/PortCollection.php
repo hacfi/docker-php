@@ -3,7 +3,7 @@
 namespace Docker;
 
 /**
- * Docker\PortCollection
+ * PortCollection
  */
 class PortCollection implements PortSpecInterface
 {
@@ -15,7 +15,7 @@ class PortCollection implements PortSpecInterface
     /**
      * @param integer|string ...$ports
      *
-     * @throws \Exception When a port definition is invalid
+     * @throws Exception When a port definition is invalid
      */
     public function __construct()
     {
@@ -27,7 +27,7 @@ class PortCollection implements PortSpecInterface
             } elseif (is_string($port) || is_integer($port)) {
                 $this->add(new Port($port));
             } else {
-                throw new Exception('Invalid port definition "('.gettype($port).') '.var_export($port, true).'"');
+                throw new Exception(sprintf('Invalid port definition "(%s) %s"', gettype($port), var_export($port, true)));
             }
         }
     }
@@ -63,7 +63,7 @@ class PortCollection implements PortSpecInterface
     /**
      * Add a port
      *
-     * @param \Docker\Port $port Port to add
+     * @param Port $port Port to add
      *
      * @return PortCollection
      */

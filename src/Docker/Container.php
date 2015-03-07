@@ -6,7 +6,7 @@ use Docker\Exception\PortNotFoundException;
 use LogicException;
 
 /**
- * Docker\Container
+ * Container
  */
 class Container
 {
@@ -99,6 +99,8 @@ class Container
      * @param integer $port
      * @param string  $protocol
      *
+     * @throws PortNotFoundException
+     *
      * @return Port
      */
     public function getMappedPort($port, $protocol = 'tcp')
@@ -183,11 +185,13 @@ class Container
             return $this->name;
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param string $name
+     *
+     * @throws \Exception
      *
      * @return Container
      */
